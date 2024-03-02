@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 15px;
+  width: 300px;
+}
+
+#container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#mintButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#mintButton:hover {
+  background-color: #45a049;
+}
+
+#statusMessage {
+  margin-top: 20px;
+  font-size: 14px;
+}
