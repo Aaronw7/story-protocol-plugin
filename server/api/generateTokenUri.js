@@ -1,13 +1,19 @@
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-    const { title, description, videoUrl } = req.body;
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Construct the metadata object
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    const { title, description, videoUrl, thumbnailUrl } = req.body;
+
     const metadata = {
         title,
         description,
-        image: "URL_to_a_thumbnail", // Optionally add an image URL
+        image: thumbnailUrl,
         properties: {
             videoUrl,
         }
