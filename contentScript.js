@@ -1,8 +1,16 @@
+const script = document.createElement('script');
+script.src = chrome.runtime.getURL('./scripts/window.js');
+(document.head || document.documentElement).appendChild(script);
+script.onload = function() {
+    this.remove();
+};
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log("this is the original request: ", request);
+  console.log("this is document: ", document.head);
 
   if (request.action === "checkEthereum") {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window.ethereum === 'undefined') {
       console.log("Ethereum provider is available.");
       sendResponse({ ethereumAvailable: true });
     } else {
@@ -26,30 +34,35 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === "mintNFT") {
-    console.log("this is the second request: ", request);
-    ethereum.request({ method: 'eth_requestAccounts' })
-      .then(accounts => {
-        const account = accounts[0]; // Use the first account to mint NFT
+    console.log("Requesting to mint NFT:", request);
 
-        // Assuming ethers is available in the window scope (e.g., via a script tag in popup.html)
-        const signer = new ethers.providers.Web3Provider(ethereum).getSigner();
-        const contract = new ethers.Contract(request.contractAddress, request.abi, signer);
+    // Send the minting request to the injected script (window.js)
+    window.postMessage({
+      action: 'MINT_NFT',
+      contractAddress: request.contractAddress,
+      abi: request.abi,
+      tokenUri: request.tokenUri
+    }, '*');
 
-        // Use the tokenUri passed from the popup
-        contract.mintNFT(account, request.tokenUri)
-          .then((tx) => {
-            console.log('NFT Minted', tx);
-            sendResponse({ success: true, tx: tx });
-          })
-          .catch((error) => {
-            console.error('Error minting NFT', error);
-            sendResponse({ success: false, error: error.message });
-          });
-      })
-      .catch((error) => {
-        console.log('Error fetching accounts', error);
-        sendResponse({ success: false, error: error.message });
-      });
-    return true; // Indicates async response
+    // Listen for a response from window.js
+    const handleMintResponse = (event) => {
+      // Ensure the message is intended for this script
+      if (event.source === window && event.data) {
+        if (event.data.type === 'MINT_NFT_SUCCESS' || event.data.type === 'MINT_NFT_ERROR') {
+          console.log('Minting NFT response:', event.data);
+
+          // Clean up by removing the event listener after receiving the response
+          window.removeEventListener('message', handleMintResponse);
+
+          // Pass the response back to the extension's popup or background script
+          sendResponse(event.data);
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMintResponse);
+
+    // Must return true when you use sendResponse asynchronously
+    return true;
   }
 });

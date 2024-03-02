@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     const { title, description, videoUrl, thumbnailUrl } = req.body;
 
     const metadata = {
-        title,
+        name: title,
         description,
         image: thumbnailUrl,
         properties: {

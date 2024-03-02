@@ -33,6 +33,8 @@ async function mintNFT(tokenUri) {
     }
 }
 
+// module.exports = mintNFT;
+
 const tokenUri = process.argv[2]; // Gets the third command-line argument, which is the first user-supplied argument
 if (!tokenUri) {
     console.error("Token URI not provided.");

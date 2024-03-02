@@ -1,18 +1,3 @@
-import detectEthereumProvider from '@metamask/detect-provider';
-
-async function loadMetaMaskProvider() {
-    const provider = await detectEthereumProvider();
-    if (provider) {
-        // Directly interact with the user through the popup UI
-        startApp(provider);
-    } else {
-        console.log('Please install MetaMask!');
-        // Update popup UI to show MetaMask is not installed
-    }
-}
-
-document.addEventListener('DOMContentLoaded', loadMetaMaskProvider);
-
 document.getElementById('mintNftButton').addEventListener('click', function() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { action: "checkEthereum" }, function(response) {
@@ -29,6 +14,7 @@ document.getElementById('mintNftButton').addEventListener('click', function() {
               body: JSON.stringify({
                 title: response.title,
                 description: response.description,
+                thumbnailUrl: response.thumbnailUrl,
                 videoUrl: response.videoUrl,
               }),
             });
