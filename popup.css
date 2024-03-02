@@ -1,37 +1,48 @@
 body {
-  font-family: Arial, sans-serif;
-  padding: 15px;
-  width: 300px;
+  min-width: 275px;
 }
 
-#container {
-  text-align: center;
+.content {
+  max-width: 960px; /* Adjust this value based on your preference */
+  margin: 0 auto; /* This centers the div horizontally */
+  text-align: center; /* This centers the text and inline elements like buttons inside the div */
+  padding: 20px; /* Optional: Adds some padding inside the container */
 }
 
-h1 {
-  font-size: 18px;
-  margin-bottom: 10px;
+img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #000000;
+  border-radius: 50%;
+}
+
+h3 {
+  font-size: 24px;
 }
 
 p {
-  font-size: 14px;
-  margin-bottom: 20px;
+  font-size: 12px; /* Example text size */
+  margin: 20px 0; /* Adds margin above and below the paragraph */
 }
 
-#mintButton {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+#mintNftButton {
+  background-color: #5538CE;
+  color: white; /* White text */
+  padding: 14px 20px; /* Padding inside the button */
+  margin: 10px 0; /* Some space around the button */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer/hand icon when you hover over the button */
+  width: 100%; /* Make the button expand to the full width of its container */
+  font-size: 18px; /* Larger text size */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Add some shadow for depth */
+  transition: all 0.3s; /* Smooth transition for mouse events */
 }
 
-#mintButton:hover {
-  background-color: #45a049;
+#mintNftButton:hover {
+  background-color: #422AA9;
 }
 
-#statusMessage {
-  margin-top: 20px;
-  font-size: 14px;
+#mintNftButton:active {
+  background-color: #3e8e41;
 }
