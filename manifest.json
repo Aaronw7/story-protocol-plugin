@@ -20,7 +20,11 @@
   "content_scripts": [
     {
         "matches": ["*://www.youtube.com/watch*"],
-        "js": ["contentScript.js"]
+        "js": ["contentScript.js"],
+        "run_at": "document_idle"
     }
-]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }

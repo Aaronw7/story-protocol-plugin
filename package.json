@@ -4,7 +4,9 @@
   "description": "",
   "main": "popup.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
     "hardhat": "^2.20.1"
   },
   "dependencies": {
+    "@metamask/detect-provider": "^2.0.0",
     "@openzeppelin/contracts": "^4.9.3",
     "dotenv": "^16.4.5",
     "ethers": "^6.11.1"
