@@ -1,21 +1,17 @@
-async function loadMetaMaskProvider() {
-  let detectEthereumProvider;
-  try {
-      detectEthereumProvider = await import('https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js');
-  } catch (err) {
-      console.error('Could not load the MetaMask provider:', err);
-      return;
-  }
+import detectEthereumProvider from '@metamask/detect-provider';
 
-  const provider = await detectEthereumProvider.default();
-  if (provider) {
-      startApp(provider);
-  } else {
-      console.log('Please install MetaMask!');
-  }
+async function loadMetaMaskProvider() {
+    const provider = await detectEthereumProvider();
+    if (provider) {
+        // Directly interact with the user through the popup UI
+        startApp(provider);
+    } else {
+        console.log('Please install MetaMask!');
+        // Update popup UI to show MetaMask is not installed
+    }
 }
 
-loadMetaMaskProvider();
+document.addEventListener('DOMContentLoaded', loadMetaMaskProvider);
 
 document.getElementById('mintNftButton').addEventListener('click', function() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
