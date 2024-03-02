@@ -477,8 +477,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === "mintNFT") {
-    console.log("Requesting to mint NFT:", request);
-
     // Send the minting request to the injected script (window.js)
     window.postMessage({
       action: 'MINT_NFT',
